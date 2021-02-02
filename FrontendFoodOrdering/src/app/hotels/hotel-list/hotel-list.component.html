@@ -1,0 +1,41 @@
+<div fxFlex fxLayout="column">
+  <div fxFlex fxLayout fxFill fxLayoutAlign="center center">
+    <mat-spinner *ngIf="isLoading$ | async"></mat-spinner>
+  </div>
+  <div class="content" *ngIf="!(isLoading$ | async)">
+    <div fxLayout="row wrap" fxLayoutGap="16px grid">
+      <div
+        fxFlex="25%"
+        fxFlex.xs="100%"
+        fxFlex.sm="33%"
+        *ngFor="let hotel of hotelsList$ | async"
+      >
+        <mat-card>
+          <mat-card-header>
+            <img mat-card-avatar [src]="hotel.picture" />
+            <mat-card-title>{{ hotel.hotelName }}</mat-card-title>
+            <mat-card-subtitle>{{ hotel.mobileNo }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-actions>
+            <button
+              type="button"
+              *ngIf="!(isAdmin$ | async)"
+              (click)="openHotel(hotel.id)"
+              mat-button
+            >
+              ORDER NOW
+            </button>
+            <button
+              type="button"
+              *ngIf="isAdmin$ | async"
+              (click)="openHotel(hotel.id)"
+              mat-button
+            >
+              Manage Hotel
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

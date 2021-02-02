@@ -1,0 +1,92 @@
+<div
+  fxFlex="100"
+  fxLayout="row"
+  fxLayoutAlign="center center"
+  *ngIf="userDetails$ | async as userDetails"
+>
+  <mat-card
+    fxFlex.xs="100"
+    fxFlex.gt-xs="45"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+  >
+    <mat-card-title style="text-align: center"
+      >Edit Your Details</mat-card-title
+    >
+    <form
+      #updateUser="ngForm"
+      fxFlex="100"
+      fxFlexFill
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      (submit)="onSubmit(updateUser)"
+    >
+      <mat-form-field fxFlexFill>
+        <input
+          matInput
+          name="firstName"
+          [(ngModel)]="firstName"
+          type="text"
+          placeholder="First Name"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field fxFlexFill>
+        <input
+          matInput
+          name="lastName"
+          [(ngModel)]="lastName"
+          type="text"
+          placeholder="Last Name"
+        />
+      </mat-form-field>
+
+      <mat-form-field fxFlexFill>
+        <input
+          matInput
+          name="email"
+          [(ngModel)]="email"
+          type="email"
+          placeholder="Email"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field fxFlexFill>
+        <input
+          matInput
+          name="mobileNo"
+          [(ngModel)]="mobileNo"
+          type="text"
+          pattern="\d*"
+          minlength="10"
+          maxlength="10"
+          placeholder="Mobile No"
+          required
+        />
+      </mat-form-field>
+      <input type="hidden" name="userId" [(ngModel)]="userId" />
+      <div>
+        <button
+          style="margin: 1rem"
+          mat-raised-button
+          color="accent"
+          type="submit"
+          [disabled]="updateUser.invalid"
+        >
+          Update Account
+        </button>
+        <button
+          style="margin: 1rem"
+          mat-raised-button
+          color="primary"
+          type="button"
+          routerLink="/"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>

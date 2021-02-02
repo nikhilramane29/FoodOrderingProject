@@ -1,0 +1,217 @@
+<div
+  fxFlex="100"
+  fxLayout="row"
+  fxLayoutAlign="center center"
+  *ngIf="userAddress$ | async as userAdd"
+>
+  <mat-card
+    fxFlex.xs="100"
+    fxFlex.gt-xs="45"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+  >
+    <mat-card-title style="text-align: center"
+      >Edit Your Address</mat-card-title
+    >
+    <form
+      #updateUserAdd="ngForm"
+      fxFlex="100"
+      fxFlexFill
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      (submit)="onSubmit(updateUserAdd)"
+    >
+      <mat-form-field fxFlexFill>
+        <input
+          matInput
+          name="addressLine1"
+          [(ngModel)]="addressLine1"
+          type="text"
+          placeholder="Address Line 1"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field fxFlexFill>
+        <input
+          matInput
+          name="addressLine2"
+          [(ngModel)]="addressLine2"
+          type="text"
+          placeholder="Address Line 2"
+        />
+      </mat-form-field>
+
+      <mat-form-field fxFlexFill>
+        <input
+          matInput
+          name="city"
+          [(ngModel)]="city"
+          type="text"
+          placeholder="City"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" fxFlexFill>
+        <mat-label>State</mat-label>
+        <mat-select [(ngModel)]="state" name="state">
+          <mat-option *ngFor="let state of states" [value]="state">
+            {{ state }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlexFill>
+        <input
+          matInput
+          name="country"
+          [(ngModel)]="country"
+          type="text"
+          placeholder="Country"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field fxFlexFill>
+        <input
+          matInput
+          name="pincode"
+          [(ngModel)]="pincode"
+          type="text"
+          placeholder="PIN Code"
+          required
+        />
+      </mat-form-field>
+      <input type="hidden" name="addressId" [(ngModel)]="addressId" />
+      <div>
+        <button
+          style="margin: 1rem"
+          mat-raised-button
+          color="accent"
+          type="submit"
+          [disabled]="updateUserAdd.invalid"
+        >
+          Update Address
+        </button>
+        <button
+          style="margin: 1rem"
+          mat-raised-button
+          color="primary"
+          type="button"
+          (click)="cancel()"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>
+
+<div
+  fxFlex="100"
+  fxLayout="row"
+  fxLayoutAlign="center center"
+  *ngIf="!(userAddress$ | async)"
+>
+  <mat-card
+    fxFlex.xs="100"
+    fxFlex.gt-xs="45"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+  >
+    <mat-card-title style="text-align: center">Add New Address</mat-card-title>
+    <form
+      #addUserAdd="ngForm"
+      fxFlex="100"
+      fxFlexFill
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      (submit)="addAddress(addUserAdd)"
+    >
+      <mat-form-field fxFlexFill>
+        <input
+          matInput
+          name="addressLine1"
+          [(ngModel)]="addressLine1"
+          type="text"
+          placeholder="Address Line 1"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field fxFlexFill>
+        <input
+          matInput
+          name="addressLine2"
+          [(ngModel)]="addressLine2"
+          type="text"
+          placeholder="Address Line 2"
+        />
+      </mat-form-field>
+
+      <mat-form-field fxFlexFill>
+        <input
+          matInput
+          name="city"
+          [(ngModel)]="city"
+          type="text"
+          placeholder="City"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" fxFlexFill>
+        <mat-label>State</mat-label>
+        <mat-select [(ngModel)]="state" name="state">
+          <mat-option *ngFor="let state of states" [value]="state">
+            {{ state }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlexFill>
+        <input
+          matInput
+          name="country"
+          [(ngModel)]="country"
+          type="text"
+          placeholder="Country"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field fxFlexFill>
+        <input
+          matInput
+          name="pincode"
+          [(ngModel)]="pincode"
+          type="text"
+          placeholder="PIN Code"
+          required
+        />
+      </mat-form-field>
+      <input type="hidden" name="addressId" [(ngModel)]="addressId" />
+      <div>
+        <button
+          style="margin: 1rem"
+          mat-raised-button
+          color="accent"
+          type="submit"
+          [disabled]="addUserAdd.invalid"
+        >
+          Add Address
+        </button>
+        <button
+          style="margin: 1rem"
+          mat-raised-button
+          color="primary"
+          type="button"
+          routerLink="../"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>

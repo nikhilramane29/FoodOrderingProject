@@ -1,0 +1,66 @@
+<div>
+  <div *ngIf="message != null">
+    <h2 style="text-align: center">
+      {{ message }}
+    </h2>
+  </div>
+
+  <div *ngIf="message == null">
+    <h2 style="margin: auto; text-align: center">Cart Items</h2>
+  </div>
+
+  <mat-card class="card" *ngFor="let cartItem of cartItems$ | async">
+    <div>
+      <mat-card-content style="font-weight: 400">{{
+        cartItem.item.itemName
+      }}</mat-card-content>
+      <mat-card-content style="font-weight: bold">{{
+        cartItem.item.itemPrice | currency: "INR"
+      }}</mat-card-content>
+    </div>
+
+    <div>
+      <button
+        mat-button
+        color="warn"
+        (click)="decreaseQuantity(cartItem.item.id)"
+      >
+        <mat-icon>remove</mat-icon>
+      </button>
+      <span>{{ cartItem.quantity }}</span>
+      <button
+        mat-button
+        color="primary"
+        (click)="increaseQuantity(cartItem.item.id)"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+      <button mat-button (click)="removeSingleItem(cartItem.id)">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </div>
+  </mat-card>
+
+  <mat-card class="card" *ngIf="message == null">
+    <mat-card-content>
+      <div
+        fxLayout="row"
+        fxLayoutAlign="space-evenly center"
+        style="margin-top: 1rem"
+      >
+        <h3 style="margin: auto">Total Amount: &nbsp;</h3>
+        <h3 style="margin: auto">
+          {{ totalAmount$ | async | currency: "INR" }}
+        </h3>
+      </div></mat-card-content
+    >
+    <mat-card-actions style="margin-bottom: 0">
+      <button mat-raised-button color="warn" (click)="clearCart()">
+        Clear Cart
+      </button>
+      <button mat-raised-button color="primary" routerLink="checkout">
+        Checkout
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

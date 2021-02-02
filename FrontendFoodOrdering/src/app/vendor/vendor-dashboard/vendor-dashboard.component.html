@@ -1,0 +1,52 @@
+<div fxFlex fxLayout="column">
+  <div><h2 style="text-align: center">Vendor Dashboard</h2></div>
+  <div fxFlex fxLayout fxFill fxLayoutAlign="center center">
+    <mat-spinner *ngIf="isLoading$ | async"></mat-spinner>
+  </div>
+  <div class="content">
+    <div
+      fxLayout="row wrap"
+      fxLayoutGap="16px grid"
+      *ngIf="selectedHotel$ | async as hotel"
+    >
+      <div fxFlex="50%" fxFlex.xs="100%" fxFlex.sm="33%">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>{{ hotel.hotelName }}</mat-card-title>
+            <mat-card-subtitle>{{ hotel.mobileNo }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-actions>
+            <button
+              type="button"
+              *ngIf="isVendor$ | async"
+              (click)="openHotel(hotel.id)"
+              mat-button
+            >
+              Manage Hotel
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+      <div fxFlex="50%" fxFlex.xs="100%" fxFlex.sm="33%">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Orders</mat-card-title>
+            <mat-card-subtitle
+              >See all your orders and change the status</mat-card-subtitle
+            >
+          </mat-card-header>
+          <mat-card-actions>
+            <button
+              type="button"
+              (click)="openOrders(hotel.id)"
+              *ngIf="isVendor$ | async"
+              mat-button
+            >
+              Manage Orders
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

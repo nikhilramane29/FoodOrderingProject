@@ -1,0 +1,135 @@
+<div fxFlex="100" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card
+    fxFlex.xs="100"
+    fxFlex.gt-xs="70"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    ><mat-card-title style="text-align: center">Checkout Cart</mat-card-title>
+    <div
+      gdColumns.gt-xs="25% 65%"
+      gdRow.xs="100% 100%"
+      gdAuto="row dense"
+      gdGap.gt-xs="60px 60px"
+      gdGap.xs="1rem 1rem"
+      fxFlexFill
+      fxLayoutAlign="space-evenly center"
+    >
+      <mat-card *ngIf="selUser$ | async as user"
+        ><mat-card-title style="font-size: 19px; text-align: center"
+          >Your Address</mat-card-title
+        >
+        <mat-radio-button checked></mat-radio-button>
+        <div style="margin-left: 5%">
+          <mat-card-subtitle style="margin-top: 0.5rem"
+            >{{ user.firstName }} {{ user.lastName }}</mat-card-subtitle
+          >
+          <mat-card-subtitle>{{ user.address.addressLine1 }}</mat-card-subtitle>
+          <mat-card-subtitle>{{ user.address.addressLine2 }}</mat-card-subtitle>
+          <mat-card-subtitle
+            >{{ user.address.city }} -
+            {{ user.address.pincode }}</mat-card-subtitle
+          >
+          <mat-card-subtitle
+            >{{ user.address.state }},
+            {{ user.address.country }}</mat-card-subtitle
+          >
+        </div>
+        <mat-card-actions>
+          <button mat-button color="primary" routerLink="/account/edit-address">
+            Edit Address
+          </button>
+        </mat-card-actions>
+      </mat-card>
+      <mat-card>
+        <mat-card-title style="font-size: 19px; text-align: center">
+          Cart Items
+        </mat-card-title>
+        <mat-card-content>
+          <mat-list *ngFor="let item of cartItems$ | async">
+            <mat-list-item style="font-size: 14px">
+              {{ item.item.itemName }} x {{ item.quantity }} =
+              {{
+                item.item.itemPrice * item.quantity | currency: "INR"
+              }}</mat-list-item
+            >
+            <mat-divider> </mat-divider>
+          </mat-list>
+          <mat-card-title style="font-size: 17px; margin-top: 1rem">
+            Total Amount : {{ totalAmount$ | async | currency: "INR" }}
+          </mat-card-title></mat-card-content
+        >
+      </mat-card>
+    </div>
+    <div style="margin: 1rem">
+      <mat-divider> </mat-divider>
+      <mat-card-title
+        style="font-size: 19px; text-align: center; margin-top: 1rem"
+        >Payment Method</mat-card-title
+      >
+      <mat-card-subtitle>Select a payment method from below</mat-card-subtitle>
+
+      <div>
+        <mat-radio-group
+          aria-label="Select Payment Option"
+          [(ngModel)]="hidden"
+        >
+          <mat-radio-button value="true">Cash On Delivery</mat-radio-button>
+          <mat-radio-button value="false">Card</mat-radio-button>
+        </mat-radio-group>
+
+        <div *ngIf="hidden == 'false'" style="margin: 1rem">
+          <form fxLayoutAlign="stretch" fxLayout="column" autocomplete="off">
+            <mat-form-field>
+              <input
+                matInput
+                name="cardNumber"
+                ngModel
+                type="text"
+                pattern="\d*"
+                minlength="16"
+                maxlength="16"
+                placeholder="Card Number"
+                required
+              />
+            </mat-form-field>
+
+            <mat-form-field>
+              <input
+                matInput
+                name="expiry"
+                required
+                ngModel
+                type="text"
+                placeholder="Expiry Date: MM/YY"
+              />
+            </mat-form-field>
+
+            <mat-form-field>
+              <input
+                matInput
+                name="cvv"
+                ngModel
+                type="text"
+                pattern="\d*"
+                minlength="3"
+                maxlength="3"
+                placeholder="CVV"
+                required
+              />
+            </mat-form-field>
+          </form>
+        </div>
+      </div>
+    </div>
+    <mat-dialog-actions
+      ><button
+        mat-raised-button
+        type="button"
+        (click)="placeOrder()"
+        color="primary"
+      >
+        Place Order
+      </button></mat-dialog-actions
+    >
+  </mat-card>
+</div>

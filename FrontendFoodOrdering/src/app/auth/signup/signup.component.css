@@ -1,0 +1,10 @@
+mat-spinner {
+  margin: auto;
+}
+.main-div mat-card {
+  padding: 0px;
+  overflow: hidden;
+}
+.signup-form {
+  padding: 20px;
+}

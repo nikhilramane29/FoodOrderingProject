@@ -1,0 +1,106 @@
+<mat-spinner style="margin: auto" *ngIf="isLoading$ | async"></mat-spinner>
+<div id="heading">
+  <mat-card *ngIf="selectedHotel$ | async as selHotel">
+    <mat-card-header fxFlex fxLayoutAlign="start center">
+      <img
+        *ngIf="!(isAdmin$ | async) && !(isVendor$ | async)"
+        mat-card-avatar
+        [src]="selHotel.picture"
+      />
+      <img
+        *ngIf="(isAdmin$ | async) || (isVendor$ | async)"
+        (click)="upload.click()"
+        mat-card-avatar
+        [src]="selHotel.picture"
+      />
+      <input #upload type="file" hidden (change)="onFileChanged($event)" />
+      <mat-card-title>{{ selHotel.hotelName }}</mat-card-title>
+      <mat-card-subtitle>{{ addressString }}</mat-card-subtitle>
+      <mat-card-subtitle>{{ selHotel.mobileNo }} </mat-card-subtitle>
+      <mat-card-actions
+        *ngIf="(isAdmin$ | async) || (isVendor$ | async)"
+        fxFlex.gt-md
+        fxLayoutAlign.gt-md="end center"
+      >
+        <button
+          mat-button
+          *ngIf="this.selectedFile"
+          type="button"
+          (click)="onUpload(selHotel.id)"
+          value="Upload"
+        >
+          Upload Image
+        </button>
+        <button
+          mat-button
+          (click)="openOrders(selHotel.id)"
+          *ngIf="isAdmin$ | async"
+        >
+          Manage Orders
+        </button>
+        <button mat-button routerLink="add">Add Menu Items</button>
+        <div>
+          <button
+            color="warn"
+            *ngIf="isAdmin$ | async"
+            mat-button
+            (click)="deleteHotel()"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+
+          <button mat-button (click)="editHotel()">
+            <mat-icon>create</mat-icon>
+          </button>
+        </div>
+      </mat-card-actions>
+    </mat-card-header>
+  </mat-card>
+</div>
+
+<!-- Customer View where only available items are visible -->
+<div *ngIf="!(isAdmin$ | async) && !(isVendor$ | async)">
+  <div *ngFor="let menuItem of selectedHotelMenu$ | async">
+    <div *ngIf="menuItem.available">
+      <mat-card class="card">
+        <div>
+          <mat-card-content style="font-weight: 400">{{
+            menuItem.itemName
+          }}</mat-card-content>
+          <mat-card-content style="font-weight: bold">{{
+            menuItem.itemPrice | currency: "INR"
+          }}</mat-card-content>
+        </div>
+
+        <div>
+          <button mat-button color="accent" (click)="addToCart(menuItem)">
+            Add To Cart
+          </button>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<!-- Admin View where all items are visible -->
+<div *ngIf="(isAdmin$ | async) || (isVendor$ | async)">
+  <mat-card class="card" *ngFor="let menuItem of selectedHotelMenu$ | async">
+    <div>
+      <mat-card-content style="font-weight: 400">{{
+        menuItem.itemName
+      }}</mat-card-content>
+      <mat-card-content style="font-weight: bold">{{
+        menuItem.itemPrice | currency: "INR"
+      }}</mat-card-content>
+    </div>
+
+    <div>
+      <button color="warn" mat-button (click)="deleteItem(menuItem.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button mat-button (click)="editItem(menuItem.id)">
+        <mat-icon>create</mat-icon>
+      </button>
+    </div>
+  </mat-card>
+</div>

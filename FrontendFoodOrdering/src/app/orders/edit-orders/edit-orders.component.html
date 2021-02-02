@@ -1,0 +1,57 @@
+<div fxFlex fxLayout="column">
+  <div fxFlex fxLayout fxFill fxLayoutAlign="center center">
+    <mat-spinner *ngIf="isLoading$ | async"></mat-spinner>
+  </div>
+  <h2 style="text-align: center">Orders</h2>
+  <mat-accordion
+    multi="true"
+    style="padding: 16px"
+    *ngIf="!(isLoading$ | async)"
+  >
+    <div style="margin-top: 1rem" *ngFor="let order of orders$ | async">
+      <mat-expansion-panel multi>
+        <mat-expansion-panel-header>
+          <mat-panel-title fxLayoutAlign="flex-start center"
+            >Order ID: {{ order.orderId }}
+          </mat-panel-title>
+          <mat-panel-description fxLayoutAlign="space-between center">
+            <p fxLayoutAlign="flex-start">
+              Order from : {{ order.hotel.hotelName }}
+            </p>
+            <p>
+              Amount:
+              {{ order.grandTotal | currency: "INR" }}
+            </p>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div *ngFor="let items of order.orderItems">
+          <p>
+            {{ items.item.itemName }} x {{ items.quantity }} =
+            {{ items.amount | currency: "INR" }}
+          </p>
+        </div>
+        <mat-form-field>
+          <mat-label>Status</mat-label>
+          <mat-select
+            (selectionChange)="selectChanged(order.orderId, $event)"
+            [ngModel]="order.status"
+            name="state"
+          >
+            <mat-option *ngFor="let stat of status" [value]="stat">
+              {{ stat }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-action-row>
+          <button
+            mat-button
+            color="primary"
+            (click)="updateStatus(order.orderId)"
+          >
+            Update Status
+          </button>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </div>
+  </mat-accordion>
+</div>

@@ -1,0 +1,99 @@
+<mat-toolbar color="primary">
+  <div fxHide.gt-xs>
+    <button mat-icon-button (click)="onToggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+  <div>
+    <a routerLink="/">FoodMan</a>
+  </div>
+  <div fxFlex fxLayout fxLayoutAlign="flex-end">
+    <ul fxLayout fxLayoutGap="10px" class="navigation-items">
+      <li>
+        <div
+          fxFlex
+          fxLayout
+          fxLayoutAlign="flex-stretch center"
+          fxLayoutGap="1rem"
+        >
+          <mat-icon>brightness_5</mat-icon>
+          <mat-slide-toggle [formControl]="toggleControl"></mat-slide-toggle>
+          <mat-icon>bedtime</mat-icon>
+        </div>
+      </li>
+
+      <li
+        *ngIf="
+          (isAuthenticated$ | async) &&
+          !(isAdmin$ | async) &&
+          !(isVendor$ | async)
+        "
+      >
+        <button
+          mat-button
+          [matBadge]="getQty$ | async"
+          matBadgeColor="warn"
+          routerLink="/cart"
+          routerLinkActive="mat-accent"
+        >
+          <mat-icon>shopping_cart</mat-icon>
+        </button>
+      </li>
+      <li *ngIf="!(isAuthenticated$ | async)" fxHide.xs>
+        <button mat-button routerLink="/auth" routerLinkActive="mat-accent">
+          Authorize
+        </button>
+      </li>
+
+      <li *ngIf="isAdmin$ | async" fxHide.xs>
+        <button
+          mat-button
+          routerLink="/vendorRegister"
+          routerLinkActive="mat-accent"
+        >
+          Register Vendor
+        </button>
+      </li>
+
+      <li *ngIf="isAdmin$ | async" fxHide.xs>
+        <button
+          mat-button
+          routerLink="/hotelCreate"
+          routerLinkActive="mat-accent"
+        >
+          Create Hotel
+        </button>
+      </li>
+
+      <li
+        *ngIf="
+          (isAuthenticated$ | async) &&
+          !(isAdmin$ | async) &&
+          !(isVendor$ | async)
+        "
+        routerLinkActive="mat-accent"
+        fxHide.xs
+      >
+        <button mat-button [matMenuTriggerFor]="afterMenu">
+          Manage Account
+        </button>
+        <mat-menu #afterMenu="matMenu" xPosition="after">
+          <button mat-menu-item routerLink="/account/edit-account">
+            <b>Edit Account</b>
+          </button>
+          <button mat-menu-item routerLink="/account/edit-address">
+            <b>Add/Edit Address</b>
+          </button>
+          <button mat-menu-item routerLink="/orders">
+            <b>Orders</b>
+          </button>
+          <button mat-menu-item (click)="onLogout()"><b>Logout</b></button>
+        </mat-menu>
+      </li>
+
+      <li *ngIf="(isAdmin$ | async) || (isVendor$ | async)" fxHide.xs>
+        <button mat-button (click)="onLogout()">Logout</button>
+      </li>
+    </ul>
+  </div>
+</mat-toolbar>

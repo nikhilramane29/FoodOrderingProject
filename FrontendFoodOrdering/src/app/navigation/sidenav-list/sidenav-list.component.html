@@ -1,0 +1,53 @@
+<mat-nav-list>
+  <a
+    mat-list-item
+    routerLink="/auth"
+    (click)="onClose()"
+    *ngIf="!(isAuth$ | async)"
+  >
+    <mat-icon>face</mat-icon>
+    <span class="nav-caption">Authorize</span>
+  </a>
+
+  <a
+    mat-list-item
+    routerLink="/vendorRegister"
+    (click)="onClose()"
+    *ngIf="isAdmin$ | async"
+  >
+    <span class="nav-caption">Register Vendor</span>
+  </a>
+
+  <a
+    mat-list-item
+    routerLink="/hotelCreate"
+    (click)="onClose()"
+    *ngIf="isAdmin$ | async"
+  >
+    <mat-icon>restaurant</mat-icon>
+    <span class="nav-caption">Create Hotel</span>
+  </a>
+
+  <a
+    mat-list-item
+    routerLink="/edit-account"
+    (click)="onClose()"
+    *ngIf="(isAuth$ | async) && !(isAdmin$ | async) && !(isVendor$ | async)"
+  >
+    <span class="nav-caption">Edit Account</span>
+  </a>
+
+  <a
+    mat-list-item
+    routerLink="/edit-address"
+    (click)="onClose()"
+    *ngIf="(isAuth$ | async) && !(isAdmin$ | async) && !(isVendor$ | async)"
+  >
+    <span class="nav-caption">Add/Edit Address</span>
+  </a>
+
+  <a mat-list-item (click)="onLogout()" *ngIf="isAuth$ | async">
+    <mat-icon>eject</mat-icon>
+    <span class="nav-caption">Logout</span>
+  </a>
+</mat-nav-list>

@@ -1,0 +1,9 @@
+.content {
+  padding: 16px;
+}
+
+.mat-card-avatar {
+  height: 90px;
+  width: 90px;
+  border-radius: 0%;
+}

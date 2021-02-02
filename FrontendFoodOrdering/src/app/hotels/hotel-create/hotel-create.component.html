@@ -1,0 +1,122 @@
+<div fxFlex="100" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card
+    fxFlex.xs="100"
+    fxFlex.gt-xs="45"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+  >
+    <mat-card-title style="text-align: center">Create Hotel</mat-card-title>
+    <form
+      (submit)="onSubmit(hotelForm)"
+      #hotelForm="ngForm"
+      fxFlex="100"
+      fxFlexFill
+      fxLayout="column"
+      fxLayoutAlign="center center"
+    >
+      <mat-form-field fxFlexFill>
+        <input
+          matInput
+          name="hotelName"
+          ngModel
+          type="text"
+          placeholder="Hotel Name"
+          required
+          autocapitalize="words"
+        />
+      </mat-form-field>
+
+      <mat-form-field fxFlexFill>
+        <input
+          matInput
+          name="mobileNo"
+          ngModel
+          placeholder="Mobile No"
+          required
+          type="text"
+          pattern="\d*"
+          minlength="10"
+          maxlength="10"
+        />
+      </mat-form-field>
+
+      <mat-form-field fxFlexFill>
+        <input
+          matInput
+          name="addressLine1"
+          ngModel
+          type="text"
+          placeholder="Address Line 1"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field fxFlexFill>
+        <input
+          matInput
+          name="addressLine2"
+          ngModel
+          type="text"
+          placeholder="Address Line 2"
+        />
+      </mat-form-field>
+
+      <mat-form-field fxFlexFill>
+        <input
+          matInput
+          name="city"
+          ngModel
+          type="text"
+          placeholder="City"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" fxFlexFill>
+        <mat-label>State</mat-label>
+        <mat-select ngModel name="state">
+          <mat-option *ngFor="let state of states" [value]="state">
+            {{ state }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlexFill>
+        <input
+          matInput
+          name="country"
+          [(ngModel)]="country"
+          type="text"
+          placeholder="Country"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field fxFlexFill>
+        <input
+          matInput
+          name="pincode"
+          ngModel
+          type="text"
+          placeholder="PIN Code"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field fxFlexFill>
+        <input
+          matInput
+          name="vendorEmail"
+          ngModel
+          type="text"
+          placeholder="Vendor Email"
+          email
+        />
+      </mat-form-field>
+
+      <button mat-raised-button color="accent" type="submit">
+        Create Hotel
+      </button>
+    </form>
+  </mat-card>
+</div>

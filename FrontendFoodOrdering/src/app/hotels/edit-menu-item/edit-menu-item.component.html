@@ -1,0 +1,62 @@
+<div fxFlex="100" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card
+    fxFlex.xs="100"
+    fxFlex.gt-xs="45"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+  >
+    <mat-card-title style="text-align: center">Edit Menu Item</mat-card-title>
+    <form
+      (submit)="updateMenuItem(itemForm)"
+      #itemForm="ngForm"
+      fxFlex="100"
+      fxFlexFill
+      fxLayout="column"
+      fxLayoutAlign="center center"
+    >
+      <mat-form-field fxFlexFill>
+        <input
+          matInput
+          name="itemName"
+          [(ngModel)]="itemName"
+          type="text"
+          placeholder="Hotel Name"
+          required
+          autocapitalize="words"
+        />
+      </mat-form-field>
+
+      <mat-form-field fxFlexFill>
+        <input
+          matInput
+          name="itemPrice"
+          [(ngModel)]="itemPrice"
+          type="text"
+          placeholder="Item Price"
+          required
+        />
+      </mat-form-field>
+
+      <section>
+        <mat-checkbox name="available" [(ngModel)]="available"
+          >Available</mat-checkbox
+        >
+      </section>
+
+      <mat-card-actions>
+        <button mat-raised-button color="accent" type="submit">
+          Update Item
+        </button>
+        <button
+          style="margin: 1rem"
+          mat-raised-button
+          color="primary"
+          type="button"
+          routerLink="../../"
+        >
+          Cancel
+        </button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>

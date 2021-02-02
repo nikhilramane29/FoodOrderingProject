@@ -1,0 +1,50 @@
+<div fxLayoutAlign="center center" fxFlexFill class="main-div">
+  <mat-card fxFlex="100">
+    <form
+      (submit)="onLogin(loginForm)"
+      #loginForm="ngForm"
+      fxLayoutAlign="stretch"
+      fxLayout="column"
+      class="login-form"
+    >
+      <mat-form-field>
+        <input
+          matInput
+          name="email"
+          ngModel
+          type="email"
+          placeholder="E-Mail Address"
+          #emailInput="ngModel"
+          required
+          email
+        />
+        <mat-error *ngIf="emailInput.invalid"
+          >Please enter a valid email!</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          name="password"
+          type="password"
+          matInput
+          placeholder="Password"
+          ngModel
+          #passwordInput="ngModel"
+          required
+        />
+        <mat-error *ngIf="passwordInput.invalid"
+          >Please enter valid Email or Password</mat-error
+        >
+      </mat-form-field>
+      <button
+        style="margin-top: 10px"
+        mat-raised-button
+        color="accent"
+        type="submit"
+        [disabled]="loginForm.invalid"
+      >
+        Login
+      </button>
+    </form>
+  </mat-card>
+</div>
